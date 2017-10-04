@@ -24,3 +24,11 @@ Resources:
   TestBucket:
     Type: AWS::S3::Bucket
 
+
+Outputs:
+
+  TestBucketArn:
+    Value: !GetAtt TestBucket.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-test-bucket-arn"
+
