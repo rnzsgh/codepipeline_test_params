@@ -67,6 +67,7 @@ Resources:
                 Action:
                   - "s3:*"
 
+  # Modify this piece to add any permissions you may need for the CodeBuild phase
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -135,11 +136,22 @@ Resources:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts:
-        Location: !Ref ArtifactBucket
-        Type: S3
+        Type: CODEPIPELINE
       Source:
-        Location: !Sub "${ArtifactBucket}/source.zip"
-        Type: S3
+        BuildSpec: |
+          ---
+          version: 0.2
+          phases:
+            build:
+              commands:
+                - ls -la
+                - cat TestOutput.json
+                - pwd > build.json
+
+          artifacts:
+            files:
+              - build.json
+        Type: CODEPIPELINE
       Environment:
         ComputeType: BUILD_GENERAL1_SMALL
         Image: !Ref BuildDockerImage
