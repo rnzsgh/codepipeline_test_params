@@ -186,7 +186,7 @@ Resources:
               Configuration:
                 ChangeSetName: Deploy
                 ActionMode: CREATE_UPDATE
-                StackName: !Sub "svc-${GitHubSourceRepo}-${AWS::StackName}"
+                StackName: !Sub "test-stack-${AWS::StackName}"
                 Capabilities: CAPABILITY_NAMED_IAM
                 TemplatePath: !Sub "App::embedded.cfn.yml"
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
